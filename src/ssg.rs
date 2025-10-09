@@ -8,7 +8,7 @@ fn main() {
         .with_cfg(server_only! {
             ServeConfig::builder()
                 .incremental(
-                    IncrementalRendererConfig::new()
+                    dioxus::server::IncrementalRendererConfig::new()
                         .static_dir(
                             std::env::current_exe()
                                 .unwrap()
@@ -30,7 +30,7 @@ fn main() {
 #[server(endpoint = "static_routes")]
 async fn static_routes() -> Result<Vec<String>, ServerFnError> {
     Ok(Route::static_routes()
-        .into_iter()
-        .map(|route| route.to_string())
-        .collect::<Vec<_>>())
+        .iter()
+        .map(ToString::to_string)
+        .collect())
 }

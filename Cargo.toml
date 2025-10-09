@@ -8,8 +8,8 @@ publish = false
 
 [dependencies]
 dioxus = { path = "../dioxus/packages/dioxus", features = ["fullstack", "router"] }
-serde = "1.0.219"
-tokio = { version = "1.45.1", features = ["full"], optional = true }
+serde = "1.0.228"
+tokio = { version = "1.47.1", features = ["full"], optional = true }
 
 [features]
 default = []

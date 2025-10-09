@@ -6,31 +6,29 @@ The `dx run` command works correctly in all scenarios (with/without SSG, debug/r
 ```bash
 # Works (debug mode)
 cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release -- \
-    run --verbose --bin base-path --platform web --base-path base-path
+    run --verbose --bin base-path --renderer web --base-path base-path
 ```
 
 ```bash
 # Works (release mode)
 cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release -- \
-    run --verbose --release --bin base-path --platform web --base-path base-path
+    run --verbose --release --bin base-path --renderer web --base-path base-path
 ```
 
 ```bash
 # Kinda works (debug mode with SSG)
-# Visiting a page that does not exist (e.g. http://127.0.0.1:8080/base-path/abc) results in some error that is not just 404
-# Vising a page that is not home (e.g. http://127.0.0.1:8080/base-path/page) strips the base_path and then tries to load a page that does not exist (e.g. http://127.0.0.1:8080/page):
-# Encountered error: ParseRouteError { message: "Failed to parse route Route did not match:\nAttempted Matches:\n1) Route 'Home' ('/') did not match:\nFound additional trailing segments: sds\n2) Route 'Page' ('/page') did not match:\nStatic segment 'page' did not match instead found 'sds'\n" }
+# Visiting a page that does not exist (e.g. http://127.0.0.1:8080/base-path/abc) shows an error but returns 200 instead of 404
+# Vising a page that is not home (e.g. http://127.0.0.1:8080/base-path/page) strips the base_path and then tries to load a page that does not exist (e.g. http://127.0.0.1:8080/page)
 cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release -- \
-    run --verbose --bin base-path-ssg --platform web --base-path base-path --ssg
+    run --verbose --bin base-path-ssg --renderer web --base-path base-path --ssg
 ```
 
 ```bash
 # Kinda works (release mode with SSG)
-# Visiting a page that does not exist (e.g. http://127.0.0.1:8080/base-path/abc) results in some error that is not just 404
-# Vising a page that is not home (e.g. http://127.0.0.1:8080/base-path/page) strips the base_path and then tries to load a page that does not exist (e.g. http://127.0.0.1:8080/page):
-# Encountered error: ParseRouteError { message: "Failed to parse route Route did not match:\nAttempted Matches:\n1) Route 'Home' ('/') did not match:\nFound additional trailing segments: sds\n2) Route 'Page' ('/page') did not match:\nStatic segment 'page' did not match instead found 'sds'\n" }
+# Visiting a page that does not exist (e.g. http://127.0.0.1:8080/base-path/abc) shows an error but returns 200 instead of 404
+# Vising a page that is not home (e.g. http://127.0.0.1:8080/base-path/page) strips the base_path and then tries to load a page that does not exist (e.g. http://127.0.0.1:8080/page)
 cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release -- \
-    run --verbose --release --bin base-path-ssg --platform web --base-path base-path --ssg
+    run --verbose --release --bin base-path-ssg --renderer web --base-path base-path --ssg
 ```
 
 ## `dx bundle`
@@ -47,14 +45,14 @@ The `dx bundle` command only works correctly in the release mode:
 # 2) Route 'Page' ('/page') did not match:
 # Static segment 'page' did not match instead found 'base-path'
 cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release -- \
-    bundle --bin base-path --platform web --base-path base-path && \
+    bundle --bin base-path --renderer web --base-path base-path && \
     PORT=8080 ./target/dx/base-path/debug/web/base-path
 ```
 
 ```bash
 # Works (release mode)
 cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release -- \
-    bundle --release --bin base-path --platform web --base-path base-path && \
+    bundle --release --bin base-path --renderer web --base-path base-path && \
     PORT=8080 ./target/dx/base-path/release/web/base-path
 ```
 
@@ -68,13 +66,13 @@ cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release --
 # 2) Route 'Page' ('/page') did not match:
 # Static segment 'page' did not match instead found 'base-path'
 cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release -- \
-    bundle --bin base-path-ssg --platform web --base-path base-path --ssg && \
+    bundle --bin base-path-ssg --renderer web --base-path base-path --ssg && \
     PORT=8080 ./target/dx/base-path-ssg/debug/web/base-path-ssg
 ```
 
 ```bash
 # Works (release mode with SSG)
 cargo run --manifest-path ../dioxus/Cargo.toml --package dioxus-cli --release -- \
-    bundle --release --bin base-path-ssg --platform web --base-path base-path --ssg && \
+    bundle --release --bin base-path-ssg --renderer web --base-path base-path --ssg && \
     PORT=8080 ./target/dx/base-path-ssg/release/web/base-path-ssg
 ```
